@@ -1,11 +1,11 @@
 cabal-version:       2.2
 name:                xor
-version:             0.0.1.0
+version:             0.0.1.1
 
 category:            Data, Codec
 author:              Herbert Valerio Riedel
-maintainer:          hvr@gnu.org
-bug-reports:         https://github.com/hvr/xor/issues
+maintainer:          https://github.com/haskell-hvr/xor
+bug-reports:         https://github.com/haskell-hvr/xor/issues
 
 copyright:           © 2020  Herbert Valerio Riedel
 license:             GPL-2.0-or-later
@@ -29,6 +29,23 @@ description:
   .
   The performance is comparable to portable ISO C99 implementations but this library is implemented as pure Haskell and is thereby compatible with compile targets such as <https://github.com/ghcjs/ghcjs GHCJS>.
 
+tested-with:
+  GHC == 9.2.1
+  GHC == 9.0.2
+  GHC == 8.10.7
+  GHC == 8.8.4
+  GHC == 8.6.5
+  GHC == 8.4.4
+  GHC == 8.2.2
+  GHC == 8.0.2
+  GHC == 7.10.3
+  GHC == 7.8.4
+  GHC == 7.6.3
+  GHC == 7.4.2
+
+extra-source-files:
+  CHANGELOG.md
+
 source-repository head
   type:     git
   location: https://github.com/hvr/xor.git
@@ -41,11 +58,22 @@ common defaults
                        MagicHash
 
   build-depends:
-    , base            >= 4.5 && < 4.15
-    , bytestring     ^>= 0.10.4
+    , base            >= 4.5      && < 4.17
+    , bytestring      >= 0.10.4   && < 0.12
     , ghc-byteorder  ^>= 4.11.0.0
 
-  ghc-options: -Wall
+  -- Andreas Abel, 2022-02-16:
+  -- There are build failures with bytestring-0.11 and GHC 7
+  -- because the PS constructor was removed and retained as PatternSynonym
+  -- (for GHC 8 only, according to the release notes).
+  -- The following dependency rectifies this:
+  if !impl(ghc >= 8.0)
+    build-depends:
+      bytestring                     < 0.11
+
+  ghc-options:         -Wall
+  if impl(ghc >= 8.0)
+    ghc-options:       -Wcompat
 
 library
   import: defaults
@@ -83,7 +111,7 @@ test-suite test
   build-depends:
     , xor
       -- dependencies specific to this component
-    , tasty            ^>= 1.2.3
+    , tasty             >= 1.2.3 && < 1.5
     , tasty-hunit      ^>= 0.10
     , tasty-quickcheck ^>= 0.10
     , QuickCheck       ^>= 2.14
