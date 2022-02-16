@@ -1,11 +1,11 @@
 cabal-version:       2.2
 name:                xor
-version:             0.0.1.0
+version:             0.0.1.1
 
 category:            Data, Codec
 author:              Herbert Valerio Riedel
 maintainer:          hvr@gnu.org
-bug-reports:         https://github.com/hvr/xor/issues
+bug-reports:         https://github.com/haskell-hvr/xor/issues
 
 copyright:           © 2020  Herbert Valerio Riedel
 license:             GPL-2.0-or-later
@@ -40,10 +40,8 @@ tested-with:
   GHC == 8.0.2
   GHC == 7.10.3
   GHC == 7.8.4
-  -- Andreas Abel, 2022-02-16:
-  -- These versions only work with bytestring-0.10, could be reactivated (see below):
-  -- GHC == 7.6.3
-  -- GHC == 7.4.2
+  GHC == 7.6.3
+  GHC == 7.4.2
 
 source-repository head
   type:     git
@@ -57,10 +55,7 @@ common defaults
                        MagicHash
 
   build-depends:
-    -- Andreas Abel, 2022-02-16:
-    -- Need to exclude GHCs that do not have PatternSynonym (?!).
-    , base            >= 4.7      && < 4.17
-    -- , base            >= 4.5      && < 4.17
+    , base            >= 4.5      && < 4.17
     , bytestring      >= 0.10.4   && < 0.12
     , ghc-byteorder  ^>= 4.11.0.0
 
@@ -68,13 +63,14 @@ common defaults
   -- There are build failures with bytestring-0.11 and GHC 7
   -- because the PS constructor was removed and retained as PatternSynonym
   -- (for GHC 8 only, according to the release notes).
-  -- The following dependency rectifies this, but can only be added in a new release,
-  -- due to restrictions of what is allowed in revisions (cannot add new conditionals).
-  -- if !impl(ghc >= 8.0)
-  --   build-depends:
-  --     bytestring                     < 0.11
+  -- The following dependency rectifies this:
+  if !impl(ghc >= 8.0)
+    build-depends:
+      bytestring                     < 0.11
 
-  ghc-options: -Wall
+  ghc-options:         -Wall
+  if impl(ghc >= 8.0)
+    ghc-options:       -Wcompat
 
 library
   import: defaults
