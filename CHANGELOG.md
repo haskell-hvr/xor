@@ -1,4 +1,11 @@
 
+## 0.0.1.2
+
+_Andreas Abel, 2023-07-19_
+
+- Use `copyBytes` for deprecated `memcpy` as suggested by `bytestring-0.11.5`.
+- Tested with GHC 7.4 - 9.6.
+
 ## 0.0.1.1
 
 _Andreas Abel, 2022-02-16_

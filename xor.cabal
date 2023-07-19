@@ -1,11 +1,10 @@
 cabal-version:       2.2
 name:                xor
-version:             0.0.1.1
-x-revision:          3
+version:             0.0.1.2
 
 category:            Data, Codec
 author:              Herbert Valerio Riedel
-maintainer:          https://github.com/haskell-hvr/xor
+maintainer:          Andreas Abel
 bug-reports:         https://github.com/haskell-hvr/xor/issues
 
 copyright:           © 2020  Herbert Valerio Riedel
@@ -46,12 +45,12 @@ tested-with:
   GHC == 7.6.3
   GHC == 7.4.2
 
-extra-source-files:
+extra-doc-files:
   CHANGELOG.md
 
 source-repository head
   type:     git
-  location: https://github.com/hvr/xor.git
+  location: https://github.com/haskell-hvr/xor.git
 
 common defaults
   default-language:    Haskell2010

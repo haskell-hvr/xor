@@ -37,6 +37,7 @@ import           Endianness                     (ByteOrder (..), Word32, Word8, 
                                                  targetByteOrder)
 import           Foreign.C                      (CStringLen)
 import           Foreign.ForeignPtr             (withForeignPtr)
+import           Foreign.Marshal.Utils          (copyBytes)
 import           Foreign.Ptr                    (Ptr, alignPtr, castPtr, minusPtr, plusPtr)
 import           Foreign.Storable               (peek, poke)
 import           System.IO.Unsafe               (unsafeDupablePerformIO)
@@ -47,7 +48,7 @@ import qualified GHC.Word                       as X
 
 -- bytestring
 import qualified Data.ByteString                as BS
-import           Data.ByteString.Internal       (mallocByteString, memcpy)
+import           Data.ByteString.Internal       (mallocByteString)
 import qualified Data.ByteString.Internal       as BS (ByteString (..))
 import qualified Data.ByteString.Lazy.Internal  as BL (ByteString (..))
 import qualified Data.ByteString.Short          as SBS
@@ -136,7 +137,7 @@ xor32StrictByteString'' :: Word32 -> BS.ByteString -> (BS.ByteString,Word32)
 xor32StrictByteString'' msk0 (BS.PS x s l)
     = unsafeCreate' l $ \p8 ->
         withForeignPtr x $ \f -> do
-          memcpy p8 (f `plusPtr` s) (fromIntegral l)
+          copyBytes p8 (f `plusPtr` s) (fromIntegral l)
 
           case remPtr p8 4 of
             0 -> do

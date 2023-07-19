@@ -25,6 +25,7 @@ import           Data.ByteString.Internal as BS
 import qualified Data.ByteString.Short    as SBS
 import           Data.Word                (Word32, Word8)
 import           Foreign.ForeignPtr
+import           Foreign.Marshal.Utils    (copyBytes)
 import           Foreign.Ptr
 import           Foreign.Storable
 import           GHC.ByteOrder            (ByteOrder (..), targetByteOrder)
@@ -106,7 +107,7 @@ xor32ByteString'v3 _ bs | BS.null bs = bs
 xor32ByteString'v3 msk0 (BS.PS x s l)
     = unsafeCreate l $ \p8 ->
         withForeignPtr x $ \f -> do
-          memcpy p8 (f `plusPtr` s) (fromIntegral l)
+          copyBytes p8 (f `plusPtr` s) (fromIntegral l)
           let p32 = castPtr p8 :: Ptr Word32
               l32 = l `quot` 4
               p32end = p32 `plusPtr` (l32*4)
@@ -122,7 +123,7 @@ xor32ByteString'v4  _ bs | BS.null bs = bs
 xor32ByteString'v4 msk0 (BS.PS x s l)
     = unsafeCreate l $ \p8 ->
         withForeignPtr x $ \f -> do
-          memcpy p8 (f `plusPtr` s) (fromIntegral l)
+          copyBytes p8 (f `plusPtr` s) (fromIntegral l)
           _ <- IUT.xor32CStringLen msk0 (castPtr p8,l)
           return ()
 
@@ -164,4 +165,3 @@ xor8Ptr1 msk ptr  = do { x <- peek ptr; poke ptr (xor msk x) }
 
 xor32Ptr1 :: Word32 -> Ptr Word32 -> IO ()
 xor32Ptr1 msk ptr = do { x <- peek ptr; poke ptr (xor msk x) }
-
