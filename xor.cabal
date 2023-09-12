@@ -1,7 +1,7 @@
 cabal-version:       2.2
 name:                xor
 version:             0.0.1.2
-x-revision:          1
+x-revision:          2
 
 category:            Data, Codec
 author:              Herbert Valerio Riedel
@@ -112,7 +112,7 @@ test-suite test
   build-depends:
     , xor
       -- dependencies specific to this component
-    , tasty             >= 1.2.3 && < 1.5
+    , tasty             >= 1.2.3 && < 1.6
     , tasty-hunit      ^>= 0.10
     , tasty-quickcheck ^>= 0.10
     , QuickCheck       ^>= 2.14
