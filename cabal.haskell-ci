@@ -1,2 +1,2 @@
 branches: master
-installed: +all -binary -bytestring -directory -unix
+-- installed: +all -binary -bytestring -directory -unix
