@@ -1,4 +1,11 @@
 
+## 0.0.1.3
+
+_Andreas Abel, 2024-06-25_
+
+- Drop support for GHC 7.
+- Tested with GHC 8.0 - 9.10.
+
 ## 0.0.1.2
 
 _Andreas Abel, 2023-07-19_

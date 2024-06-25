@@ -1,7 +1,6 @@
 cabal-version:       2.2
 name:                xor
-version:             0.0.1.2
-x-revision:          3
+version:             0.0.1.3
 
 category:            Data, Codec
 author:              Herbert Valerio Riedel
@@ -31,7 +30,7 @@ description:
   The performance is comparable to portable ISO C99 implementations but this library is implemented as pure Haskell and is thereby compatible with compile targets such as <https://github.com/ghcjs/ghcjs GHCJS>.
 
 tested-with:
-  GHC == 9.10.0
+  GHC == 9.10.1
   GHC == 9.8.2
   GHC == 9.6.5
   GHC == 9.4.8
@@ -43,7 +42,6 @@ tested-with:
   GHC == 8.4.4
   GHC == 8.2.2
   GHC == 8.0.2
-  -- GHC == 7.10.3
 
 extra-doc-files:
   CHANGELOG.md
@@ -60,22 +58,13 @@ common defaults
                        MagicHash
 
   build-depends:
-    , base            >= 4.5      && < 5
+    , base            >= 4.9      && < 5
     , bytestring      >= 0.10.4   && < 0.13
     , ghc-byteorder  ^>= 4.11.0.0
 
-  -- Andreas Abel, 2022-02-16:
-  -- There are build failures with bytestring-0.11 and GHC 7
-  -- because the PS constructor was removed and retained as PatternSynonym
-  -- (for GHC 8 only, according to the release notes).
-  -- The following dependency rectifies this:
-  if !impl(ghc >= 8.0)
-    build-depends:
-      bytestring                     < 0.11
-
-  ghc-options:         -Wall
-  if impl(ghc >= 8.0)
-    ghc-options:       -Wcompat
+  ghc-options:
+    -Wall
+    -Wcompat
 
 library
   import: defaults
@@ -115,5 +104,5 @@ test-suite test
       -- dependencies specific to this component
     , tasty             >= 1.2.3 && < 1.6
     , tasty-hunit      ^>= 0.10
-    , tasty-quickcheck ^>= 0.10
+    , tasty-quickcheck  >= 0.10  && < 1
     , QuickCheck        >= 2.14  && < 2.16
