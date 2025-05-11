@@ -30,9 +30,10 @@ description:
   The performance is comparable to portable ISO C99 implementations but this library is implemented as pure Haskell and is thereby compatible with compile targets such as <https://github.com/ghcjs/ghcjs GHCJS>.
 
 tested-with:
-  GHC == 9.10.1
-  GHC == 9.8.2
-  GHC == 9.6.5
+  GHC == 9.12.2
+  GHC == 9.10.2
+  GHC == 9.8.4
+  GHC == 9.6.7
   GHC == 9.4.8
   GHC == 9.2.8
   GHC == 9.0.2
