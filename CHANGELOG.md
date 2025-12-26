@@ -1,4 +1,12 @@
 
+## 0.0.1.4
+
+_Andreas Abel, 2025-12-26_
+
+- Drop support for GHC 8.0 and 8.2.
+- Drop thus obsolete dependency `ghc-byteorder`.
+- Tested with GHC 8.4 - 9.14.
+
 ## 0.0.1.3
 
 _Andreas Abel, 2024-06-25_

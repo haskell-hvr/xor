@@ -23,33 +23,10 @@ module Endianness
     ) where
 
 import           Data.Word        (Word16, Word32, Word64, Word8)
+import           Data.Word        (byteSwap16, byteSwap32, byteSwap64)
 import           Foreign.Ptr
 import           Foreign.Storable
 import           GHC.ByteOrder    (ByteOrder (..), targetByteOrder)
-
-#if MIN_VERSION_base(4,7,0)
-import           Data.Word        (byteSwap16, byteSwap32, byteSwap64)
-#else
-import           Data.Bits
-
--- supply missing byteSwap operations
-
-byteSwap16 :: Word16 -> Word16
-byteSwap16 = (`rotateL` 8)
-
-byteSwap32 :: Word32 -> Word32
-byteSwap32 x
-  = (x                  `shiftR` 24)  .|.
-    ((x .&. 0x00ff0000) `shiftR`  8)  .|.
-    ((x .&. 0x0000ff00) `shiftL`  8)  .|.
-    (x                  `shiftL` 24)
-
-byteSwap64 :: Word64 -> Word64
-byteSwap64 x = xh .|. (xl `shiftL` 32)
-  where
-    xl = fromIntegral (byteSwap32 (fromIntegral x))
-    xh = fromIntegral (byteSwap32 (fromIntegral (x `shiftR` 32)))
-#endif
 
 pokeWord16be :: Ptr Word16 -> Word16 -> IO ()
 pokeWord16be = case targetByteOrder of

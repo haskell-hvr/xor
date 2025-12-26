@@ -1,7 +1,6 @@
 cabal-version:       2.2
 name:                xor
-version:             0.0.1.3
-x-revision:          1
+version:             0.0.1.4
 
 category:            Data, Codec
 author:              Herbert Valerio Riedel
@@ -31,8 +30,9 @@ description:
   The performance is comparable to portable ISO C99 implementations but this library is implemented as pure Haskell and is thereby compatible with compile targets such as <https://github.com/ghcjs/ghcjs GHCJS>.
 
 tested-with:
+  GHC == 9.14.1
   GHC == 9.12.2
-  GHC == 9.10.2
+  GHC == 9.10.3
   GHC == 9.8.4
   GHC == 9.6.7
   GHC == 9.4.8
@@ -42,8 +42,6 @@ tested-with:
   GHC == 8.8.4
   GHC == 8.6.5
   GHC == 8.4.4
-  GHC == 8.2.2
-  GHC == 8.0.2
 
 extra-doc-files:
   CHANGELOG.md
@@ -60,9 +58,10 @@ common defaults
                        MagicHash
 
   build-depends:
-    , base            >= 4.9      && < 5
-    , bytestring      >= 0.10.4   && < 0.13
-    , ghc-byteorder  ^>= 4.11.0.0
+    , base            >= 4.11      && < 5
+        -- GHC.ByteOrder ships with base-4.11 and up
+    , bytestring      >= 0.10.8.2  && < 0.13
+        -- bytestring-0.10.8.2 ships with GHC 8.4
 
   ghc-options:
     -Wall
